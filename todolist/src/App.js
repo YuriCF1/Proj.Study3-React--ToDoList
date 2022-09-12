@@ -13,8 +13,18 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('valor ' + title);
-    setTitle(''); //Limpando o formulário
+
+    const todo = {
+      id: Math.random(),
+      title,
+      time,
+      done: false,
+    };
+
+    console.log(todo); //Envio par a API
+
+    setTitle(""); //Limpando o formulário
+    setTime("");
   };
 
   return (
@@ -32,7 +42,8 @@ function App() {
               type="text"
               name="title"
               placeholder="Título da Tarefa"
-              onChange={(e) => { //Permite a mudança de valor e atribui
+              onChange={(e) => {
+                //Permite a mudança de valor e atribui
                 setTitle(e.target.value);
               }}
               value={title} //Posso modificar o o valor do input pelo 'setTitle', 'controled input'
@@ -45,7 +56,8 @@ function App() {
               type="text"
               name="time"
               placeholder="Tempo estimado (em horas)"
-              onChange={(e) => { //Permite a mudança de valor e atribui
+              onChange={(e) => {
+                //Permite a mudança de valor e atribui
                 setTime(e.target.value);
               }}
               value={time} //Posso modificar o o valor do input pelo 'setTitle', 'controled input'
