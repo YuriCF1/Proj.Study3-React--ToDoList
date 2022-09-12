@@ -1,15 +1,21 @@
-import './App.css';
+import "./App.css";
 
-import { useStatem, useEffect } from 'react';
-import { BsTrash, BsBookmarkCheck, BsBookmarkCheckFill } from 'react-icons/bs'; //Lixeira para o item, bandeira acesa e apagada 
+import { useState, useEffect } from "react";
+import { BsTrash, BsBookmarkCheck, BsBookmarkCheckFill } from "react-icons/bs"; //Lixeira para o item, bandeira acesa e apagada
 
-const API = "http://localhost:5000"
+const API = "http://localhost:5000";
 
 function App() {
-  // const [title, setTittle] = useState("");
+  const [title, setTitle] = useState("");
   // const [time, setTime] = useState("");
-  // const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
   // const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('valor ' + title);
+    setTitle(''); //Limpando o formulário
+  };
 
   return (
     <div className="App">
@@ -18,9 +24,27 @@ function App() {
       </div>
       <div className="form-todo">
         <p>Formulário</p>
+        <h2>Insira sua próxima tarefa</h2>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="form-control">
+            <label htmlFor="title">O que você vai fazer?</label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Título da Tarefa"
+              onChange={(e) => { //Permite a mudança de valor e atribui
+                setTitle(e.target.value);
+              }}
+              value={title} //Posso modificar o o valor do input pelo 'setTitle', 'controled input'
+              required
+            />
+          </div>
+          <input type="submit" value="Enviar" />
+        </form>
       </div>
       <div className="list-todo">
-        <p>Lista</p>
+        <h3>Lista de tarefas:</h3>
+        {tasks.length === 0 && <p>Não há tarefas</p>}
       </div>
     </div>
   );
