@@ -7,7 +7,7 @@ const API = "http://localhost:5000";
 
 function App() {
   const [title, setTitle] = useState("");
-  // const [time, setTime] = useState("");
+  const [time, setTime] = useState("");
   const [tasks, setTasks] = useState([]);
   // const [loading, setLoading] = useState(false);
 
@@ -39,7 +39,20 @@ function App() {
               required
             />
           </div>
-          <input type="submit" value="Enviar" />
+          <div className="form-control">
+            <label htmlFor="time">Duração:</label>
+            <input
+              type="text"
+              name="time"
+              placeholder="Tempo estimado (em horas)"
+              onChange={(e) => { //Permite a mudança de valor e atribui
+                setTime(e.target.value);
+              }}
+              value={time} //Posso modificar o o valor do input pelo 'setTitle', 'controled input'
+              required
+            />
+          </div>
+          <input type="submit" value="Criar tarefa" />
         </form>
       </div>
       <div className="list-todo">
