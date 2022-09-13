@@ -9,9 +9,24 @@ function App() {
   const [title, setTitle] = useState("");
   const [time, setTime] = useState("");
   const [tasks, setTasks] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  //Load on page load
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true); //Carregando os dados
+      const res = await fetch(API + "/todos") //Padrão já é o método GET
+        .then((res) => res.json())
+        .then((data) => data) // Retornando as informações como array de objetos
+        .catch((error) => console.log(error)); // 'Catch' é um callback que executa a função caso a promise seja rejeitada
+
+      setLoading(false);
+      setTasks(res);
+    };
+    loadData();
+  }, []); //Array de dependências, quando tá vazio, executado quando a página carrega
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const todo = {
@@ -22,6 +37,16 @@ function App() {
     };
 
     console.log(todo); //Envio par a API
+
+    await fetch(API + "/todos", {
+      //Aceita 2 parâmetros, o link da API e o objeto
+      //Concatenando a API salva na variável lá em cima com o resto do endereço
+      method: "POST",
+      body: JSON.stringify(todo), //Mandando o objeto de 'todo' como uma string, pois o backend tem que transformar depois
+      headers: {
+        "content-Type": "application/json",
+      },
+    });
 
     setTitle(""); //Limpando o formulário
     setTime("");
