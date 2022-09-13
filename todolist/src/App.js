@@ -15,13 +15,13 @@ function App() {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true); //Carregando os dados
-      const res = await fetch(API + "/todos") //Padrão já é o método GET
+      const res = await fetch(API + "/todos") //Padrão já é o método GET. AWAIT segura o código da função até ele ser executado, para depois passar
         .then((res) => res.json())
         .then((data) => data) // Retornando as informações como array de objetos
         .catch((error) => console.log(error)); // 'Catch' é um callback que executa a função caso a promise seja rejeitada
 
       setLoading(false);
-      setTasks(res);
+      setTasks(res); //Mandando a resposta da API para as tarefas da lista
     };
     loadData();
   }, []); //Array de dependências, quando tá vazio, executado quando a página carrega
@@ -48,6 +48,7 @@ function App() {
       },
     });
 
+    setTasks((prevState) => [...prevState, todo]) //Previous state, estado anterior do componente. Pegand Todo's antigos e adicionando o novo
     setTitle(""); //Limpando o formulário
     setTime("");
   };
@@ -95,6 +96,13 @@ function App() {
       <div className="list-todo">
         <h3>Lista de tarefas:</h3>
         {tasks.length === 0 && <p>Não há tarefas</p>}
+        {tasks.map((todo => ( // PARENTESES, POIS É OBJETO!
+          <div className="todo" key={todo.id}>
+            <p>{todo.title}</p>
+          </div>
+
+        )))}
+
       </div>
     </div>
   );
