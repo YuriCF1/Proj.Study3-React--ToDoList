@@ -48,10 +48,14 @@ function App() {
       },
     });
 
-    setTasks((prevState) => [...prevState, todo]) //Previous state, estado anterior do componente. Pegand Todo's antigos e adicionando o novo
+    setTasks((prevState) => [...prevState, todo]); //Previous state, estado anterior do componente. Pegand Todo's antigos e adicionando o novo
     setTitle(""); //Limpando o formulário
     setTime("");
   };
+
+  if (loading) {
+    return <h1>Carregando...</h1>;
+  }
 
   return (
     <div className="App">
@@ -95,14 +99,16 @@ function App() {
       </div>
       <div className="list-todo">
         <h3>Lista de tarefas:</h3>
-        {tasks.length === 0 && <p>Não há tarefas</p>}
-        {tasks.map((todo => ( // PARENTESES, POIS É OBJETO!
-          <div className="todo" key={todo.id}>
-            <p>{todo.title}</p>
-          </div>
-
-        )))}
-
+        {/* {tasks.length === 0 && <p>Não há tarefas</p>} */}
+        {tasks.map(
+          (
+            todo // PARENTESES, POIS É OBJETO!
+          ) => (
+            <div className="todo" key={todo.id}>
+              <p>{todo.title}</p>
+            </div>
+          )
+        )}
       </div>
     </div>
   );
